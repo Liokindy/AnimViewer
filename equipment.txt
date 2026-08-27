@@ -1,0 +1,31 @@
+Items/Skin/Normal|Skin1
+Items/ChestUnder/Shirt|ClothingYellow
+Items/Legs/PantsBlack|ClothingDarkBlue
+Items/Waist/Belt|ClothingBrown|ClothingLightYellow
+Items/Feet/ShoesBlack|ClothingBrown
+Items/ChestOver/CoatBlack|ClothingLightYellow|ClothingLightGreen
+Items/Accessory/Armband|ClothingLightYellow
+Items/Hands/FingerlessGlovesBlack|ClothingYellow
+Items/Head/AviatorHat2|ClothingLightYellow
+Items/Hurt/HurtLevel2|
+
+
+- ITEM FORMAT (USE "nil" TO REMOVE AN ITEM) -
+Path/To/Item/Images|Palette1|Palette2|Palette3
+
+- ITEM EXAMPLES (NOT IN PROPER ORDER)-
+Items/Head/AviatorHat2|ClothingDarkBrown|ClothingYellow
+Items/Skin/Tattoos|Skin1|ClothingDarkGray
+Items/Hurt/HurtLevel1
+
+- ITEM ORDER (IMPORTANT) -
+SKIN
+CHESTUNDER
+LEGS
+WAIST
+FEET
+CHESTOVER
+ACCESSORY
+HANDS
+HEAD
+HURT
