@@ -315,7 +315,7 @@ function ClothingItem(folderPath, palette1, palette2, palette3)
 		local filePath = string.format("%s/%s", folderPath, fileName)
 		local fileNoExtension = fileName:sub(1, fileName:len() - 4)
 
-		--if (fileNoExtension == ".png") then
+		if (fileNoExtension == ".png") then
 			local fileChunks, fileChunkCount = SplitString(fileNoExtension, '_')
 			local textureID = string.format("%s_%s", fileChunks[fileChunkCount - 1], fileChunks[fileChunkCount]) 
 			local textureData = love.image.newImageData(filePath)
@@ -356,7 +356,7 @@ function ClothingItem(folderPath, palette1, palette2, palette3)
 	
 			ci.Textures[textureID] = love.graphics.newImage(textureData)
 			ci.Textures[textureID]:setFilter("nearest", "nearest")
-		--end
+		end
 	end
 
 	debugprintf("Created ClothingItem (%s, %s, %s) \"%s\" - %.2fms", palette1, palette2, palette3, folderPath, (love.timer.getTime() - createTime) * 1000)
