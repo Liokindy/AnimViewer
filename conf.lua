@@ -3,4 +3,5 @@ function love.conf(t)
     t.modules.physics = false
     t.modules.audio = false
     t.window.title = "SFD Animation Viewer"
+    t.window.resizable = true
 end

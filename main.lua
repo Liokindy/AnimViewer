@@ -315,7 +315,7 @@ function ClothingItem(folderPath, palette1, palette2, palette3)
 		local filePath = string.format("%s/%s", folderPath, fileName)
 		local fileNoExtension = fileName:sub(1, fileName:len() - 4)
 
-		if (fileNoExtension == ".png") then
+		if (fileName:sub(fileName:len() - 3) == ".png") then
 			local fileChunks, fileChunkCount = SplitString(fileNoExtension, '_')
 			local textureID = string.format("%s_%s", fileChunks[fileChunkCount - 1], fileChunks[fileChunkCount]) 
 			local textureData = love.image.newImageData(filePath)
@@ -415,6 +415,7 @@ function AddConsoleText(text, t)
 end
 
 function love.load()
+	love.graphics.setFont(love.graphics.newFont(18))
 	if (love.filesystem.isFused()) then
 		love.filesystem.mount(love.filesystem.getSourceBaseDirectory(), "gameroot")
 		GAME_MOUNT_PATH = "gameroot/"
@@ -593,7 +594,7 @@ function love.update(dt)
 end
 
 function love.mousemoved(x, y, dx, dy, istouch)
-	if (love.mouse.isDown(3)) then
+	if (love.mouse.isDown(1) or love.mouse.isDown(3)) then
 		TranslationX = math.max(math.min(TranslationX + dx, 1000), -1000)
 		TranslationY = math.max(math.min(TranslationY + dy, 1000), -1000)
 
@@ -620,6 +621,7 @@ function love.wheelmoved(x, y)
 end
 
 function love.draw()
+	local l = love.graphics.getFont():getHeight()
 	love.graphics.translate(TranslationX + love.graphics.getWidth() * 0.5, TranslationY + love.graphics.getHeight() * 0.5)
 	love.graphics.scale(Zoom, Zoom)
 
@@ -740,7 +742,7 @@ function love.draw()
 	love.graphics.setColor(1, 1, 1, 1)
 
 	local timelineText = string.format("(%d/%d): \"%s\" | %d - (%.2f/%d) - (%d/%d)", AnimPreview.AnimationIndex, AnimationCount, AnimPreview.CurrentAnimation.Name, AnimPreview.CurrentAnimation.TotalTime, AnimPreview.Time, AnimPreview.CurrentFrame.Time, AnimPreview.FrameIndex, AnimPreview.FrameEndIndex)
-	love.graphics.print(timelineText, 0, love.graphics.getHeight() - 16)
+	love.graphics.print(timelineText, 0, love.graphics.getHeight() - l)
 
 	local timelineX = 16
 	local timelineY = love.graphics.getHeight() - 64
@@ -764,24 +766,25 @@ function love.draw()
 	end
 
 	-- Icons
+	local yy = l * 2
 	love.graphics.setColor(AnimPreview.Loop and {0.5,1,0.5,1} or {1,0.5,0.5,1})	
-	love.graphics.print("LOOPING ('L')", timelineX, timelineY - 64 - 16 * 0, 0)
+	love.graphics.print("LOOPING ('L')", timelineX, timelineY - yy - l * 0, 0)
 	love.graphics.setColor(AnimPreview.Pause and {0.5,1,0.5,1} or {1,0.5,0.5,1})	
-	love.graphics.print("PAUSED ('K')", timelineX, timelineY - 64 - 16 * 1, 0)
+	love.graphics.print("PAUSED ('K')", timelineX, timelineY - yy - l * 1, 0)
 	love.graphics.setColor(1, 1, 1, 1)	
-	love.graphics.print("DRAWN WEAPON ('1'-'4'): " .. (CurrentlyDrawnWeapon == 0 and "NONE" or CurrentlyDrawnWeapon), timelineX, timelineY - 64 - 16 * 2, 0)
+	love.graphics.print("DRAWN WEAPON ('1'-'4'): " .. (CurrentlyDrawnWeapon == 0 and "NONE" or CurrentlyDrawnWeapon), timelineX, timelineY - yy - l * 2, 0)
 	love.graphics.setColor(1, 1, 1, 1)	
-	love.graphics.print("SHEATHE WEAPON ('Q')", timelineX, timelineY - 64 - 16 * 3, 0)
+	love.graphics.print("SHEATHE WEAPON ('Q')", timelineX, timelineY - yy - l * 3, 0)
 	love.graphics.setColor(ShowWeapons and {0.5,1,0.5,1} or {1,0.5,0.5,1})
-	love.graphics.print("SHOW/HIDE WEAPON ('W')", timelineX, timelineY - 64 - 16 * 4, 0)
+	love.graphics.print("SHOW/HIDE WEAPON ('W')", timelineX, timelineY - yy - l * 4, 0)
 	love.graphics.setColor(DEBUG_FLAG and {0.5,1,0.5,1} or {1,0.5,0.5,1})
-	love.graphics.print("SHOW/HIDE DEBUG ('B')", timelineX, timelineY - 64 - 16 * 5, 0)
+	love.graphics.print("SHOW/HIDE DEBUG ('B')", timelineX, timelineY - yy - l * 5, 0)
 	love.graphics.setColor(1, 1, 1, 1)	
-	love.graphics.print("CYCLE ANIMATIONS ('LEFT', 'RIGHT')", timelineX, timelineY - 64 - 16 * 6, 0)
+	love.graphics.print("CYCLE ANIMATIONS ('LEFT', 'RIGHT')", timelineX, timelineY - yy - l * 6, 0)
 	love.graphics.setColor(1, 1, 1, 1)	
-	love.graphics.print("REWIND/STEP SINGLE FRAME (',', '.')", timelineX, timelineY - 64 - 16 * 7, 0)
+	love.graphics.print("REWIND/STEP SINGLE FRAME (',', '.')", timelineX, timelineY - yy - l * 7, 0)
 
 	-- Shameless self-plug
 	love.graphics.setColor(1, 1, 1, 0.5)
-	love.graphics.print("By Liokindy", love.graphics.getWidth() - 72)
+	love.graphics.print("By Liokindy", love.graphics.getWidth() - love.graphics.getFont():getWidth("By Liokindy"))
 end
